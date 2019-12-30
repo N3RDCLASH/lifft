@@ -37,7 +37,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color:Colors.white);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Schedule',
@@ -50,7 +50,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     Text(
       'Index 3: Workout',
       style: optionStyle,
-    ), 
+    ),
     Text(
       'Index 4: Account',
       style: optionStyle,
@@ -64,7 +64,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 
   // const BottomNavigationBarType(1);
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,36 +77,26 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       backgroundColor: const Color(0xff24324b),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xff3edfc2),
-        type:BottomNavigationBarType.shifting,
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today,
-            color: colos),
-            title: Text('Schedule',
-            style: TextStyle(color: colos)),
+            icon: Icon(Icons.calendar_today, color: colos),
+            title: Text('Schedule', style: TextStyle(color: colos)),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.fastfood,
-            color: colos),
-            title: Text('Food',
-            style: TextStyle(color: colos)),
+            icon: Icon(Icons.fastfood, color: colos),
+            title: Text('Food', style: TextStyle(color: colos)),
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.accessibility_new, color: colos),
+            title: Text('workout', style: TextStyle(color: colos)),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.accessibility_new,
-            color: colos),
-            title: Text('workout',
-            style: TextStyle(color: colos)),
-            
             // backgroundcolor: colos,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,
-            color: colos),
-            title: Text('Account',
-            style: TextStyle(color: colos)
-            ),
-            ),
+            icon: Icon(Icons.account_circle, color: colos),
+            title: Text('Account', style: TextStyle(color: colos)),
+          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: const Color(0xff384962),
