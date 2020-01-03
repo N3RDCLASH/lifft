@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "803903760541",
+    "firebase_url": "https://lifft-7cbcc.firebaseio.com",
+    "project_id": "lifft-7cbcc",
+    "storage_bucket": "lifft-7cbcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803903760541:android:ed181a4d1e8d7c948d4c74",
+        "android_client_info": {
+          "package_name": "com.lifft.lifft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803903760541-joduhgqpaslcgms23t6nhnsgnp5s413q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP-hhPFSNuDet3udfDBvnKxlnzQZNSFAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803903760541-joduhgqpaslcgms23t6nhnsgnp5s413q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

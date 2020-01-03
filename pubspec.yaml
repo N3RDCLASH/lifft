@@ -1,5 +1,5 @@
-name: lifft
-description: A new Flutter project.
+name: LIFFT
+description: LEADER IN FITNESS AND FOOD TRACKING
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,6 +19,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Third party packages
+  firebase_core: ^0.4.3+1
+  firebase_auth: ^0.15.3
+  google_sign_in: ^4.1.1
+  cloud_firestore: ^0.13.0+1
+  provider: ^4.0.1
+  cached_network_image: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,9 +49,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  assets:
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
