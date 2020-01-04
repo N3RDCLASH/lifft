@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xff3edfc2),
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today, color: black_color),
             title: Text('Schedule', style: TextStyle(color: black_color)),
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
             title: Text('Meals', style: TextStyle(color: black_color)),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.accessibility_new, color: black_color),
+            icon: Icon(Icons.fitness_center, color: black_color),
             title: Text('workout', style: TextStyle(color: black_color)),
           ),
           BottomNavigationBarItem(
@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xff384962),
+        selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
     );
