@@ -1,15 +1,9 @@
+import 'package:LIFFT/models/workout_day_model.dart';
 import 'package:flutter/material.dart';
 
 class CreateWorkout extends StatefulWidget {
   @override
   _CreateWorkoutState createState() => _CreateWorkoutState();
-}
-
-class WorkoutDay {
-  String name;
-  String day;
-  // Key key;
-
 }
 
 class _CreateWorkoutState extends State<CreateWorkout> {
@@ -30,10 +24,8 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   ];
 
   List workoutDays = [
-    "Meow",
-    "Woof",
-    "Mooooo",
-    "Mihihi",
+    WorkoutDay(key: UniqueKey(), day: "Moday", name: "Chest and triceps"),
+    WorkoutDay(key: UniqueKey(), day: "Tuesday", name: "Back and biceps")
   ];
 
   void _addWorkoutDayModalSheet(context) {
@@ -80,7 +72,11 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                         child: Text("Save"),
                         onPressed: () {
                           setState(() {
-                            workoutDays.add(workoutNameController.text);
+                            workoutDays.add(WorkoutDay(
+                              key: UniqueKey(),
+                              name: workoutNameController.text,
+                              day: selectedDay,
+                            ));
                           });
                           Navigator.pop(context);
                         },
@@ -150,10 +146,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   Container(
                     height: 500,
                     child: ListView.builder(
-                        key: UniqueKey(),
                         itemCount: workoutDays.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Text(workoutDays[index]);
+                          return workoutDays[index];
                         }),
                   ),
                 ],
