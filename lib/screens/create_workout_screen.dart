@@ -1,4 +1,4 @@
-import 'package:LIFFT/models/workout_day_model.dart';
+import 'package:LIFFT/screens/add_workoutday_screen.dart';
 import 'package:flutter/material.dart';
 
 class CreateWorkout extends StatefulWidget {
@@ -9,85 +9,19 @@ class CreateWorkout extends StatefulWidget {
 class _CreateWorkoutState extends State<CreateWorkout> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descController = new TextEditingController();
-  TextEditingController workoutNameController = new TextEditingController();
   bool stepOneComplete = false;
 
-  String selectedDay;
-  List<String> days = <String>[
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
-  ];
+  List workoutDays = [];
 
-  List workoutDays = [
-    WorkoutDay(key: UniqueKey(), day: "Moday", name: "Chest and triceps"),
-    WorkoutDay(key: UniqueKey(), day: "Tuesday", name: "Back and biceps")
-  ];
+  _goToAddWorkoutDay(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddWorkoutDay()),
+    );
 
-  void _addWorkoutDayModalSheet(context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext bc) {
-          return AlertDialog(
-            title: Text("hi"),
-            content: StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-                return Container(
-                  child: Wrap(
-                    children: <Widget>[
-                      TextField(
-                        controller: workoutNameController,
-                        decoration: InputDecoration(
-                          labelText: "New workout day name",
-                          hintText: "Ex. Chest and triceps day",
-                        ),
-                      ),
-                      DropdownButton<String>(
-                        hint: Text("Select item"),
-                        value: selectedDay,
-                        onChanged: (String value) {
-                          setState(() {
-                            selectedDay = value;
-                          });
-                        },
-                        items: days.map((String day) {
-                          return DropdownMenuItem<String>(
-                            value: day,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  day,
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                      RaisedButton(
-                        child: Text("Save"),
-                        onPressed: () {
-                          setState(() {
-                            workoutDays.add(WorkoutDay(
-                              key: UniqueKey(),
-                              name: workoutNameController.text,
-                              day: selectedDay,
-                            ));
-                          });
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
-        });
+    workoutDays.add(result);
   }
 
   @override
@@ -95,6 +29,18 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Create workout'),
+        actions: <Widget>[
+          RaisedButton(
+            color: Colors.blue,
+            child: Row(
+              children: <Widget>[
+                Text("Create"),
+                Icon(Icons.save),
+              ],
+            ),
+            onPressed: () {},
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: stepOneComplete == false
@@ -140,7 +86,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   RaisedButton(
                     child: Text("Add days to this workout"),
                     onPressed: () {
-                      _addWorkoutDayModalSheet(context);
+                      _goToAddWorkoutDay(context);
                     },
                   ),
                   Container(
@@ -148,7 +94,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                     child: ListView.builder(
                         itemCount: workoutDays.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return workoutDays[index];
+                          return workoutDays.isEmpty
+                              ? Text("No days added yet :(")
+                              : workoutDays[index];
                         }),
                   ),
                 ],
