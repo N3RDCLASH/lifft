@@ -1,5 +1,4 @@
 import 'package:LIFFT/models/user.dart';
-import 'package:LIFFT/screens/authentication/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService{
@@ -33,7 +32,7 @@ Stream<User> get user{
     }
   }
 
-  Future SignInWIthUsernameAndPassword(String email,String password) async{
+  Future signInWIthUsernameAndPassword(String email,String password) async{
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email,password: password);
       FirebaseUser user = result.user;

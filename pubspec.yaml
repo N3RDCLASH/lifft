@@ -29,13 +29,11 @@ flutter:
 
   assets:
     - assets/images/
-    - assets
 
-  # example:
   fonts:
-    - family: Social
+    - family:  Social
       fonts:
-        - asset: fonts/Social.ttf
+      - asset: fonts/Social.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
