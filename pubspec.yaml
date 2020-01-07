@@ -24,17 +24,18 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 flutter:
-
-
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/images/
+    - assets
 
   # example:
-  # fonts:
+  fonts:
+    - family: Social
+      fonts:
+        - asset: fonts/Social.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
