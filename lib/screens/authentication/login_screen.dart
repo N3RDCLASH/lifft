@@ -83,9 +83,10 @@ class LoginState extends State<Login> {
                     padding: const EdgeInsets.fromLTRB(50, 20, 35, 0),
                     child: RaisedButton(
                       onPressed: () async {
-                        dynamic result = await _auth.signInAnon();
+                        dynamic result = await _auth
+                            .signInWIthUsernameAndPassword(email, password);
                         if (result == null) {
-                          print("error signing in");
+                          setState(() => error = 'please supply a valid email');
                         } else {
                           print('signed in');
                           print(result.uid);
@@ -113,7 +114,14 @@ class LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  Text(
+                    error,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 14.0,
+                    ),
+                  ),
                 ],
               ),
             ],
