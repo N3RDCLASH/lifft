@@ -16,7 +16,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   _goToAddWorkoutDay(BuildContext context) async {
     final result = await Navigator.pushNamed(context, '/add_workout_day');
 
-    workoutDays.add(result);
+    if (result != null) workoutDays.add(result);
   }
 
   @override

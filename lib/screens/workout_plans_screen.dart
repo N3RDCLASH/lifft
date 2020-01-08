@@ -12,8 +12,7 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
   _goToCreateWorkout(BuildContext context) async {
     final result = await Navigator.pushNamed(context, '/create_workout');
 
-    workoutPlans.add(result);
-    workoutPlans.forEach((plan) => print(plan.workoutName));
+    if (result != null) workoutPlans.add(result);
   }
 
   @override
