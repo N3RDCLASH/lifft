@@ -1,4 +1,4 @@
-import 'package:LIFFT/screens/add_workoutday_screen.dart';
+import 'package:LIFFT/models/workout_plan_model.dart';
 import 'package:flutter/material.dart';
 
 class CreateWorkout extends StatefulWidget {
@@ -14,12 +14,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   List workoutDays = [];
 
   _goToAddWorkoutDay(BuildContext context) async {
-    // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Selection Screen.
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddWorkoutDay()),
-    );
+    final result = await Navigator.pushNamed(context, '/add_workout_day');
 
     workoutDays.add(result);
   }
@@ -30,16 +25,26 @@ class _CreateWorkoutState extends State<CreateWorkout> {
       appBar: AppBar(
         title: Text('Create workout'),
         actions: <Widget>[
-          RaisedButton(
-            color: Colors.blue,
-            child: Row(
-              children: <Widget>[
-                Text("Create"),
-                Icon(Icons.save),
-              ],
-            ),
-            onPressed: () {},
-          )
+          stepOneComplete
+              ? RaisedButton(
+                  color: Colors.blue,
+                  child: Row(
+                    children: <Widget>[
+                      Text("Create"),
+                      Icon(Icons.save),
+                    ],
+                  ),
+                  onPressed: () {
+                    WorkoutPlanModel plan = WorkoutPlanModel(
+                      workoutName: nameController.text,
+                      workoutDesc: descController.text,
+                      workoutDays: workoutDays,
+                    );
+
+                    Navigator.pop(context, plan);
+                  },
+                )
+              : Container(),
         ],
       ),
       body: SingleChildScrollView(
@@ -89,15 +94,17 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                       _goToAddWorkoutDay(context);
                     },
                   ),
-                  Container(
-                    height: 500,
-                    child: ListView.builder(
-                        itemCount: workoutDays.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return workoutDays.isEmpty
-                              ? Text("No days added yet :(")
-                              : workoutDays[index];
-                        }),
+                  Center(
+                    child: Container(
+                      height: 500,
+                      child: workoutDays.isEmpty
+                          ? Text("No days added yet :(")
+                          : ListView.builder(
+                              itemCount: workoutDays.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return workoutDays[index];
+                              }),
+                    ),
                   ),
                 ],
               ),
