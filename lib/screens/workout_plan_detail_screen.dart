@@ -23,6 +23,10 @@ class WorkoutPlanDetail extends StatelessWidget {
           Center(
             child: Text("Description: " + planModel.workoutDesc),
           ),
+          Center(
+            child:
+                Text("Active workout: " + planModel.activeWorkout.toString()),
+          ),
           Expanded(
             child: planModel.workoutDays.isEmpty
                 ? Text("no days")
@@ -30,7 +34,7 @@ class WorkoutPlanDetail extends StatelessWidget {
                     itemCount: planModel.workoutDays.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Center(
-                        child: planModel.workoutDays[index],
+                        child: Text(planModel.workoutDays[index].name),
                       );
                     }),
           ),

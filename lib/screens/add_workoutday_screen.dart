@@ -62,11 +62,16 @@ class _AddWorkoutDayState extends State<AddWorkoutDay> {
             RaisedButton(
               child: Text("Save"),
               onPressed: () {
+                Map<String, String> wd = {
+                  selectedDay: workoutNameController.text,
+                };
+
                 WorkoutDay workoutDay = WorkoutDay(
-                  key: UniqueKey(),
                   name: workoutNameController.text,
                   day: selectedDay,
+                  workoutDay: wd,
                 );
+
                 Navigator.pop(context, workoutDay);
               },
             )

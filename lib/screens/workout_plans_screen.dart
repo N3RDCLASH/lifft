@@ -1,4 +1,6 @@
+import 'package:LIFFT/models/workout_day_model.dart';
 import 'package:LIFFT/models/workout_plan_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutPlan extends StatefulWidget {
@@ -7,69 +9,56 @@ class WorkoutPlan extends StatefulWidget {
 }
 
 class _WorkoutPlanState extends State<WorkoutPlan> {
-  List<WorkoutPlanModel> workoutPlans = [];
-
-  _goToCreateWorkout(BuildContext context) async {
-    final result = await Navigator.pushNamed(context, '/create_workout');
-
-    if (result != null) workoutPlans.add(result);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return workoutPlans.isEmpty
-        ? Container(
-            child: RaisedButton(
-              color: const Color(0xff24324b),
-              child: Text(
-                'Tap here to create a new workout plan',
-                style: TextStyle(
-                  color: Colors.white,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-              onPressed: () {
-                _goToCreateWorkout(context);
-              },
-            ),
-          )
-        : Column(
-            children: <Widget>[
-              Container(
-                child: RaisedButton(
-                  // color: const Color(0xff24324b),
-                  color: Colors.blue,
+    return Scaffold(
+      backgroundColor: const Color(0xff24324b),
+      body: StreamBuilder(
+        stream: Firestore.instance.collection('workout_plans').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text("Loading..");
+          }
+          return ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (BuildContext context, int index) {
+                DocumentSnapshot ds = snapshot.data.documents[index];
+                return FlatButton(
                   child: Text(
-                    'Tap here to create a new workout plan',
-                    style: TextStyle(
-                      color: Colors.white,
-                      // decoration: TextDecoration.underline,
-                    ),
+                    ds['workoutName'],
+                    style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    _goToCreateWorkout(context);
+                    List wds = [];
+
+                    ds['workoutDays'].forEach((k, v) {
+                      WorkoutDay wd =
+                          new WorkoutDay(day: k, name: v, workoutDay: {k: v});
+                      wds.add(wd);
+                    });
+
+                    WorkoutPlanModel planModel = new WorkoutPlanModel(
+                      workoutName: ds['workoutName'],
+                      workoutDesc: ds['workoutDesc'],
+                      activeWorkout: ds['activeWorkout'],
+                      workoutDays: wds,
+                    );
+
+                    Navigator.of(context).pushNamed(
+                      '/workout_plan_detail',
+                      arguments: planModel,
+                    );
                   },
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: workoutPlans.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return FlatButton(
-                        child: Text(
-                          workoutPlans[index].workoutName,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                            '/workout_plan_detail',
-                            arguments: workoutPlans[index],
-                          );
-                        },
-                      );
-                    }),
-              ),
-            ],
-          );
+                );
+              });
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, '/create_workout');
+        },
+      ),
+    );
   }
 }

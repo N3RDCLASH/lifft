@@ -1,4 +1,5 @@
 import 'package:LIFFT/models/workout_plan_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CreateWorkout extends StatefulWidget {
@@ -17,6 +18,21 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     final result = await Navigator.pushNamed(context, '/add_workout_day');
 
     if (result != null) workoutDays.add(result);
+  }
+
+  void _createWorkoutPlan(
+    String workoutName,
+    String workoutDesc,
+    Map<String, String> workoutDays,
+  ) async {
+    DocumentReference ref =
+        await Firestore.instance.collection("workout_plans").add({
+      'workoutName': workoutName,
+      'workoutDesc': workoutDesc,
+      'workoutDays': workoutDays,
+      'activeWorkout': false
+    });
+    print('New workout plan created ${ref.documentID}');
   }
 
   @override
@@ -38,7 +54,19 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                     WorkoutPlanModel plan = WorkoutPlanModel(
                       workoutName: nameController.text,
                       workoutDesc: descController.text,
+                      activeWorkout: false,
                       workoutDays: workoutDays,
+                    );
+
+                    Map<String, String> workoutDaysMap = {};
+                    plan.workoutDays.forEach((i) {
+                      workoutDaysMap.addAll(i.workoutDay);
+                    });
+
+                    _createWorkoutPlan(
+                      plan.workoutName,
+                      plan.workoutDesc,
+                      workoutDaysMap,
                     );
 
                     Navigator.pop(context, plan);
@@ -102,7 +130,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                           : ListView.builder(
                               itemCount: workoutDays.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return workoutDays[index];
+                                return Text(workoutDays[index].name);
                               }),
                     ),
                   ),
