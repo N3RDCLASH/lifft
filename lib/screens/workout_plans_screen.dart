@@ -9,6 +9,41 @@ class WorkoutPlan extends StatefulWidget {
 }
 
 class _WorkoutPlanState extends State<WorkoutPlan> {
+  void _showDeleteDialog(DocumentSnapshot ds) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Are u sure?"),
+          content: Text("This workoutplan will be deleted permanently."),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("Yes"),
+              onPressed: () {
+                try {
+                  Firestore.instance
+                      .collection('workout_plans')
+                      .document(ds.documentID)
+                      .delete();
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                } catch (e) {
+                  print(e.toString());
+                }
+              },
+            ),
+            FlatButton(
+              child: new Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,16 +83,7 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                         child: FlatButton(
                           child: Text('Delete'),
                           onPressed: () {
-                            print(ds.documentID);
-                            try {
-                              Firestore.instance
-                                  .collection('workout_plans')
-                                  .document(ds.documentID)
-                                  .delete();
-                              Navigator.pop(context);
-                            } catch (e) {
-                              print(e.toString());
-                            }
+                            _showDeleteDialog(ds);
                           },
                         ),
                       ),
