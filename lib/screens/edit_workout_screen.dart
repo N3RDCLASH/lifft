@@ -13,11 +13,17 @@ class EditWorkout extends StatefulWidget {
 }
 
 class _EditWorkoutState extends State<EditWorkout> {
+  @override
+  EditWorkout get widget => super.widget;
+
   TextEditingController nameController = new TextEditingController();
+
   TextEditingController descController = new TextEditingController();
+
   bool stepOneComplete = false;
 
   List workoutDays = [];
+
   Map days;
 
   _goToAddWorkoutDay(BuildContext context) async {
@@ -30,33 +36,45 @@ class _EditWorkoutState extends State<EditWorkout> {
     String workoutName,
     String workoutDesc,
     Map<String, String> workoutDays,
+    DocumentSnapshot ds,
   ) async {
-    DocumentReference ref =
-        await Firestore.instance.collection("workout_plans").add({
-      'workoutName': workoutName,
-      'workoutDesc': workoutDesc,
-      'workoutDays': workoutDays,
-      'activeWorkout': false
-    });
-    print('New workout plan created ${ref.documentID}');
+    try {
+      Firestore.instance
+          .collection('workout_plans')
+          .document(ds.documentID)
+          .updateData({
+        'workoutName': workoutName,
+        'workoutDesc': workoutDesc,
+        'workoutDays': workoutDays,
+        'activeWorkout': false
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+
     nameController.text = widget.ds['workoutName'];
     descController.text = widget.ds['workoutDesc'];
     days = widget.ds['workoutDays'];
 
-    // days.forEach((k, v) {
-    //   // print(k + v);
-    //   WorkoutDay wd = WorkoutDay(
-    //     day: k,
-    //     name: v,
-    //     workoutDay: {k: v},
-    //   );
-    //   workoutDays.add(wd);
-    // });
+    days.forEach((k, v) {
+      // print(k + v);
+      WorkoutDay wd = WorkoutDay(
+        day: k,
+        name: v,
+        workoutDay: {k: v},
+      );
 
+      workoutDays.add(wd);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit workout'),
@@ -86,6 +104,7 @@ class _EditWorkoutState extends State<EditWorkout> {
                 plan.workoutName,
                 plan.workoutDesc,
                 workoutDaysMap,
+                widget.ds,
               );
 
               Navigator.pop(context, plan);
