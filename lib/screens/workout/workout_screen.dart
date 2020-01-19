@@ -7,6 +7,7 @@ class Workout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: 1,
       length: 2,
       child: Scaffold(
         backgroundColor: const Color(0xff24324b),
