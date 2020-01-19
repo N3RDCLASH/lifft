@@ -1,10 +1,10 @@
-import 'package:LIFFT/screens/add_workoutday_screen.dart';
-import 'package:LIFFT/screens/edit_workout_screen.dart';
-import 'package:LIFFT/screens/edit_workoutday_screen.dart';
-import 'package:LIFFT/screens/workout_plan_detail_screen.dart';
 import 'package:flutter/material.dart';
-import './screens/create_workout_screen.dart';
 import './screens/home_screen.dart';
+import 'screens/workout/workout_plans/add_workoutday_screen.dart';
+import 'screens/workout/workout_plans/create_workout_screen.dart';
+import 'screens/workout/workout_plans/edit_workout_screen.dart';
+import 'screens/workout/workout_plans/edit_workoutday_screen.dart';
+import 'screens/workout/workout_plans/workout_plan_detail_screen.dart';
 
 void main() => runApp(MyApp());
 

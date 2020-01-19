@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import './meals_screen.dart';
 import './schedule_screen.dart';
-import './workout_screen.dart';
 import './account_screen.dart';
 import '../style/theme.dart';
+import 'workout/workout_screen.dart';
 
 class Home extends StatefulWidget {
   @override

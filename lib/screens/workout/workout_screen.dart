@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './training_screen.dart';
-import './workout_plans_screen.dart';
+
+import 'training/training_screen.dart';
+import 'workout_plans/workout_plans_screen.dart';
 
 class Workout extends StatelessWidget {
   @override
