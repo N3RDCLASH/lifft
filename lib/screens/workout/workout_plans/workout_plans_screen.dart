@@ -111,6 +111,7 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                       workoutDesc: ds['workoutDesc'],
                       activeWorkout: ds['activeWorkout'],
                       workoutDays: wds,
+                      ds: ds.documentID,
                     );
 
                     Navigator.of(context).pushNamed(
