@@ -1,6 +1,7 @@
 import 'package:LIFFT/models/workout_plan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CreateWorkout extends StatefulWidget {
   @override
@@ -37,6 +38,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
   @override
   Widget build(BuildContext context) {
+    workoutDays.sort((a, b) {
+      var adate = a.day;
+      var bdate = b.day;
+      return adate.compareTo(bdate);
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Create workout'),
@@ -51,6 +58,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                     ],
                   ),
                   onPressed: () {
+                    workoutDays.sort((a, b) {
+                      var adate = a.day;
+                      var bdate = b.day;
+                      return adate.compareTo(bdate);
+                    });
+
                     WorkoutPlanModel plan = WorkoutPlanModel(
                       workoutName: nameController.text,
                       workoutDesc: descController.text,
@@ -62,6 +75,8 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                     plan.workoutDays.forEach((i) {
                       workoutDaysMap.addAll(i.workoutDay);
                     });
+
+                    print(workoutDaysMap);
 
                     _createWorkoutPlan(
                       plan.workoutName,
@@ -130,7 +145,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                           : ListView.builder(
                               itemCount: workoutDays.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return Text(workoutDays[index].name);
+                                return ListTile(
+                                  // leading: Icon(Icons.edit),
+                                  title: Text(workoutDays[index].name),
+                                  subtitle: Text(DateFormat('EEEE').format(
+                                      DateTime.parse(workoutDays[index].day))),
+                                );
                               }),
                     ),
                   ),

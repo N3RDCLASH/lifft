@@ -18,6 +18,12 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
           content: Text("This workoutplan will be deleted permanently."),
           actions: <Widget>[
             FlatButton(
+              child: new Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
               child: new Text("Yes"),
               onPressed: () {
                 try {
@@ -30,12 +36,6 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
                 } catch (e) {
                   print(e.toString());
                 }
-              },
-            ),
-            FlatButton(
-              child: new Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop();
               },
             ),
           ],

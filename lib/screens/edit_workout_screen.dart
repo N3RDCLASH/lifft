@@ -2,6 +2,7 @@ import 'package:LIFFT/models/workout_day_model.dart';
 import 'package:LIFFT/models/workout_plan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EditWorkout extends StatefulWidget {
   final DocumentSnapshot ds;
@@ -30,6 +31,20 @@ class _EditWorkoutState extends State<EditWorkout> {
     final result = await Navigator.pushNamed(context, '/add_workout_day');
 
     if (result != null) workoutDays.add(result);
+  }
+
+  _goToEditWorkoutDay(BuildContext context, List args) async {
+    final result = await Navigator.pushNamed(
+      context,
+      '/edit_workout_day',
+      arguments: args,
+    );
+
+    if (result != null) {
+      List rslt = result;
+      workoutDays.removeAt(rslt[0]);
+      workoutDays.insert(rslt[0], rslt[1]);
+    }
   }
 
   void _updateWorkoutPlan(
@@ -62,7 +77,6 @@ class _EditWorkoutState extends State<EditWorkout> {
     days = widget.ds['workoutDays'];
 
     days.forEach((k, v) {
-      // print(k + v);
       WorkoutDay wd = WorkoutDay(
         day: k,
         name: v,
@@ -73,8 +87,43 @@ class _EditWorkoutState extends State<EditWorkout> {
     });
   }
 
+  void _showDeleteDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Are u sure?"),
+          content: Text("This workoutday will be deleted permanently."),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: new Text("Yes"),
+              onPressed: () {
+                setState(() {
+                  workoutDays.removeAt(index);
+                  Navigator.pop(context);
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    workoutDays.sort((a, b) {
+      var adate = a.day;
+      var bdate = b.day;
+      return adate.compareTo(bdate);
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit workout'),
@@ -88,6 +137,12 @@ class _EditWorkoutState extends State<EditWorkout> {
               ],
             ),
             onPressed: () {
+              workoutDays.sort((a, b) {
+                var adate = a.day;
+                var bdate = b.day;
+                return adate.compareTo(bdate);
+              });
+
               WorkoutPlanModel plan = WorkoutPlanModel(
                 workoutName: nameController.text,
                 workoutDesc: descController.text,
@@ -146,7 +201,25 @@ class _EditWorkoutState extends State<EditWorkout> {
                     : ListView.builder(
                         itemCount: workoutDays.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Text(workoutDays[index].name);
+                          return ListTile(
+                            leading: Icon(Icons.edit),
+                            title: Text(workoutDays[index].name),
+                            subtitle: Text(DateFormat('EEEE').format(
+                                DateTime.parse(workoutDays[index].day))),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete),
+                              color: Colors.red,
+                              onPressed: () {
+                                _showDeleteDialog(index);
+                              },
+                            ),
+                            onTap: () {
+                              List args = [];
+                              args.add(index);
+                              args.add(workoutDays[index]);
+                              _goToEditWorkoutDay(context, args);
+                            },
+                          );
                         }),
               ),
             ),

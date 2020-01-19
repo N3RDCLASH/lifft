@@ -2,25 +2,29 @@ import 'package:LIFFT/models/workout_day_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AddWorkoutDay extends StatefulWidget {
+class EditWorkoutDay extends StatefulWidget {
+  final List args;
+
+  EditWorkoutDay(this.args);
+
   @override
-  _AddWorkoutDayState createState() => _AddWorkoutDayState();
+  _EditWorkoutDayState createState() => _EditWorkoutDayState();
 }
 
-class _AddWorkoutDayState extends State<AddWorkoutDay> {
+class _EditWorkoutDayState extends State<EditWorkoutDay> {
   TextEditingController workoutNameController = new TextEditingController();
 
-  // String selectedDay;
+  String selectedDay;
 
-  // List<String> days = <String>[
-  //   "Monday",
-  //   "Tuesday",
-  //   "Wednesday",
-  //   "Thursday",
-  //   "Friday",
-  //   "Saturday",
-  //   "Sunday"
-  // ];
+  List<String> days = <String>[
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
 
   DateTime _date = DateTime.now();
 
@@ -42,10 +46,18 @@ class _AddWorkoutDayState extends State<AddWorkoutDay> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    workoutNameController.text = widget.args[1].name;
+    selectedDay = widget.args[1].day;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add new day"),
+        title: Text("Edit day"),
       ),
       body: SafeArea(
         child: Column(
@@ -79,13 +91,14 @@ class _AddWorkoutDayState extends State<AddWorkoutDay> {
             //     );
             //   }).toList(),
             // ),
+
             RaisedButton(
               child: Text('Select day'),
               onPressed: () => _selectDate(context),
             ),
             Text('Selected Day: ${DateFormat('EEEE').format(_date)}'),
             RaisedButton(
-              child: Text("Add"),
+              child: Text("Update"),
               onPressed: () {
                 Map<String, String> wd = {
                   _date.toString(): workoutNameController.text,
@@ -97,7 +110,11 @@ class _AddWorkoutDayState extends State<AddWorkoutDay> {
                   workoutDay: wd,
                 );
 
-                Navigator.pop(context, workoutDay);
+                List args = [];
+                args.add(widget.args[0]);
+                args.add(workoutDay);
+
+                Navigator.pop(context, args);
               },
             )
           ],
