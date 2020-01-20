@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './screens/home_screen.dart';
+import 'screens/workout/training/add_exercise_screen.dart';
+import 'screens/workout/training/log_workout_screen.dart';
 import 'screens/workout/workout_plans/add_workoutday_screen.dart';
 import 'screens/workout/workout_plans/create_workout_screen.dart';
 import 'screens/workout/workout_plans/edit_workout_screen.dart';
@@ -28,6 +30,8 @@ class _MyAppState extends State<MyApp> {
               WorkoutPlanDetail(settings.arguments),
           '/edit_workout': (context) => EditWorkout(settings.arguments),
           '/edit_workout_day': (context) => EditWorkoutDay(settings.arguments),
+          '/log_workout': (context) => LogWorkout(),
+          '/add_exercise': (context) => AddExercise(),
         };
         WidgetBuilder builder = routes[settings.name];
         return MaterialPageRoute(builder: (ctx) => builder(ctx));

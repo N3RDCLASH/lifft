@@ -30,7 +30,9 @@ class _TrainingState extends State<Training> {
             '${DateFormat('EEEE').format(DateTime.parse(d.day))}: ${d.name}',
             // style: TextStyle(color: Colors.white),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/log_workout');
+          },
         )));
 
     return days;
