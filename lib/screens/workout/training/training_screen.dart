@@ -1,5 +1,7 @@
+import 'package:LIFFT/models/workout_day_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Training extends StatefulWidget {
   @override
@@ -7,56 +9,64 @@ class Training extends StatefulWidget {
 }
 
 class _TrainingState extends State<Training> {
-  Map wp;
+  List wds = [];
 
-  @override
-  void initState() {
-    super.initState();
+  _getWorkoutDays(var ds) {
+    List<Widget> days = [];
+    List<WorkoutDay> d = [];
+    ds['workoutDays'].forEach((k, v) {
+      WorkoutDay wd = WorkoutDay(day: k, name: v, workoutDay: {k: v});
+      d.add(wd);
+    });
 
-    Firestore.instance.collection("workout_plans").getDocuments().then(
-      (QuerySnapshot snapshot) {
-        snapshot.documents.forEach((doc) {
-          try {
-            Firestore.instance
-                .collection('workout_plans')
-                .document(doc.documentID)
-                .get()
-                .then((d) {
-              if (d.data['activeWorkout'] == true) {
-                setState(() {
-                  wp = d.data;
-                });
-              } else {
-                setState(() {
-                  wp = null;
-                });
-              }
-            });
-          } catch (e) {
-            print(e.toString());
-          }
-        });
-      },
-    );
+    d.sort((a, b) {
+      var adate = a.day;
+      var bdate = b.day;
+      return adate.compareTo(bdate);
+    });
+
+    d.forEach((d) => days.add(RaisedButton(
+          child: Text(
+            '${DateFormat('EEEE').format(DateTime.parse(d.day))}: ${d.name}',
+            // style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () {},
+        )));
+
+    return days;
   }
 
   @override
   Widget build(BuildContext context) {
-    return wp == null
-        ? Text('loading')
-        : SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text(
-                  'Current plan: ' + wp['workoutName'],
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text(
-                  'Description: ' + wp['workoutDesc'],
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          );
+    return StreamBuilder(
+        stream: Firestore.instance
+            .collection('workout_plans')
+            .where('activeWorkout', isEqualTo: true)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text("Loading..");
+          }
+
+          return ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (BuildContext context, int index) {
+                DocumentSnapshot ds = snapshot.data.documents[index];
+
+                return Column(
+                  children: <Widget>[
+                    Text(
+                      'Current plan : ' + ds['workoutName'],
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      'Description : ' + ds['workoutDesc'],
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    ..._getWorkoutDays(ds),
+                  ],
+                );
+              });
+        });
   }
 }
