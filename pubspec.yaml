@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  rxdart: ^0.23.1
 
   # Third party packages
   firebase_core: ^0.4.3+1
@@ -31,9 +32,9 @@ flutter:
     - assets/images/
 
   fonts:
-    - family:  Social
+    - family: Social
       fonts:
-      - asset: fonts/Social.ttf
+        - asset: fonts/Social.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

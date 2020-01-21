@@ -10,6 +10,6 @@ const background_gradient = BoxDecoration(
     gradient: LinearGradient(colors: [background_color2, background_color1]));
 
 const white_text = TextStyle(color: white_color, fontFamily: 'Roboto');
-const white_border =  UnderlineInputBorder(
+const white_border = UnderlineInputBorder(
     borderSide:
         BorderSide(color: Colors.white, width: 1.0, style: BorderStyle.solid));

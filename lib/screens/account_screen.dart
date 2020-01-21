@@ -14,6 +14,7 @@ class Account extends StatelessWidget {
           child: Text('Log Out'),
           onPressed: () {
             _auth.signOut();
+            _auth.signOutGoogle();
           },
         ),
       ),

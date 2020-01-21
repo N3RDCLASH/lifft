@@ -33,7 +33,7 @@ class AuthenticationState extends State<Authentication> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.588,
+                height: MediaQuery.of(context).size.height * 1,
                 decoration: background_gradient,
                 child: Container(
                   child: Padding(
@@ -62,7 +62,7 @@ class AuthenticationState extends State<Authentication> {
                                     child: Container(
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.48,
+                                              0.58,
                                       child: TabBarView(
                                         children: [
                                           Login(),

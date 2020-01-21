@@ -115,6 +115,44 @@ class LoginState extends State<Login> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 20, 35, 0),
+                    child: RaisedButton(
+                      onPressed: () async {
+                        _auth.signInWithGoogle();
+                      },
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(0.0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20)),
+                      child: Container(
+                        width: 250,
+                        decoration: const BoxDecoration(
+                            // gradient: null,
+                            color: white_color,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(80.0))),
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8,0,8,0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * .06,
+                              child: Image.asset(
+                                'assets/images/google.jpg',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                          const Text(
+                            'Sign in with Google',
+                            style:
+                                TextStyle(fontSize: 18, fontFamily: 'Roboto', color: background_color1),
+                          ),
+                        ]),
+                      ),
+                    ),
+                  ),
                   Text(
                     error,
                     style: TextStyle(
