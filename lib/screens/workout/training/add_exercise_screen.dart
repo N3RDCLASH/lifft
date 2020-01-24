@@ -106,7 +106,6 @@ class _AddExerciseState extends State<AddExercise> {
                   'name': exercise.name,
                   'description': exercise.description,
                   'muscleGroup': exercise.muscleGroup,
-                  'imgUrl': exercise.imgUrl,
                   "searchIndex": indexList,
                 }).then((onValue) {
                   Navigator.pop(context);
