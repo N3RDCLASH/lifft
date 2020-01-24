@@ -34,7 +34,7 @@ flutter:
 
   assets:
     - assets/
-    - assets/muscle_icons
+    - assets/muscle_icons/
 
   # example:
   # fonts:
