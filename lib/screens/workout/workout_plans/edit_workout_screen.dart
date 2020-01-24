@@ -61,7 +61,6 @@ class _EditWorkoutState extends State<EditWorkout> {
         'workoutName': workoutName,
         'workoutDesc': workoutDesc,
         'workoutDays': workoutDays,
-        'activeWorkout': false
       });
     } catch (e) {
       print(e.toString());
