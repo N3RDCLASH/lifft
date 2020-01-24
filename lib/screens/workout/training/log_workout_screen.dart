@@ -7,6 +7,9 @@ class LogWorkout extends StatefulWidget {
 }
 
 class _LogWorkoutState extends State<LogWorkout> {
+  TextEditingController searchController = TextEditingController();
+  String searchString;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,17 +19,32 @@ class _LogWorkoutState extends State<LogWorkout> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            TextField(),
+            TextField(
+              decoration: InputDecoration(hintText: "Search for exercises"),
+              controller: searchController,
+              onChanged: (val) {
+                setState(() {
+                  searchString = val.toLowerCase();
+                });
+              },
+            ),
             RaisedButton(
               child: Text('add new exercise'),
               onPressed: () => Navigator.pushNamed(context, '/add_exercise'),
             ),
             StreamBuilder(
-                stream: Firestore.instance.collection('exercises').snapshots(),
+                stream: (searchString == null || searchString.trim() == "")
+                    ? Firestore.instance.collection('exercises').snapshots()
+                    : Firestore.instance
+                        .collection('exercises')
+                        .where('searchIndex', arrayContains: searchString)
+                        .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Text("Loading..");
                   }
+
+                  print(snapshot.data.documents);
 
                   return Container(
                     height: 600,

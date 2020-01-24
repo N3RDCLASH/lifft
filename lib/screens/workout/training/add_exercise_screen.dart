@@ -88,11 +88,26 @@ class _AddExerciseState extends State<AddExercise> {
                   imgUrl: '',
                 );
 
+                String searchString =
+                    "${exercise.name} ${exercise.description} ${exercise.muscleGroup}";
+
+                List splitList = [];
+                splitList = searchString.split(" ");
+
+                List indexList = [];
+
+                for (int i = 0; i < splitList.length; i++) {
+                  for (int y = 1; y < splitList[i].length + 1; y++) {
+                    indexList.add(splitList[i].substring(0, y).toLowerCase());
+                  }
+                }
+
                 Firestore.instance.collection('exercises').add({
                   'name': exercise.name,
                   'description': exercise.description,
                   'muscleGroup': exercise.muscleGroup,
                   'imgUrl': exercise.imgUrl,
+                  "searchIndex": indexList,
                 }).then((onValue) {
                   Navigator.pop(context);
 
