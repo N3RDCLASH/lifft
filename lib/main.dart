@@ -7,6 +7,7 @@ import 'screens/workout/workout_plans/create_workout_screen.dart';
 import 'screens/workout/workout_plans/edit_workout_screen.dart';
 import 'screens/workout/workout_plans/edit_workoutday_screen.dart';
 import 'screens/workout/workout_plans/workout_plan_detail_screen.dart';
+import 'screens/workout/training/log_exercise_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,6 +33,7 @@ class _MyAppState extends State<MyApp> {
           '/edit_workout_day': (context) => EditWorkoutDay(settings.arguments),
           '/log_workout': (context) => LogWorkout(),
           '/add_exercise': (context) => AddExercise(),
+          '/log_exercise': (context) => LogExercise(settings.arguments),
         };
         WidgetBuilder builder = routes[settings.name];
         return MaterialPageRoute(builder: (ctx) => builder(ctx));

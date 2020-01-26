@@ -69,41 +69,6 @@ class _LogWorkoutState extends State<LogWorkout> {
     }
   }
 
-  void _showDeleteDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Are u sure?"),
-          content: Text("This workoutplan will be deleted permanently."),
-          actions: <Widget>[
-            FlatButton(
-              child: new Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: new Text("Yes"),
-              onPressed: () {
-                // try {
-                //   Firestore.instance
-                //       .collection('workout_plans')
-                //       .document(ds.documentID)
-                //       .delete();
-                //   Navigator.pop(context);
-                //   Navigator.pop(context);
-                // } catch (e) {
-                //   print(e.toString());
-                // }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,7 +114,10 @@ class _LogWorkoutState extends State<LogWorkout> {
                             leading: _getMuscleIcon(ds['muscleGroup']),
                             title: Text(ds['name']),
                             subtitle: Text(ds['description']),
-                            onTap: _showDeleteDialog,
+                            onTap: () => Navigator.of(context).pushNamed(
+                              '/log_exercise',
+                              arguments: ds,
+                            ),
                           );
                         }),
                   );
