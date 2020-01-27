@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import './screens/home_screen.dart';
 import 'screens/workout/training/add_exercise_screen.dart';
 import 'screens/workout/training/log_workout_screen.dart';
@@ -9,7 +10,9 @@ import 'screens/workout/workout_plans/edit_workoutday_screen.dart';
 import 'screens/workout/workout_plans/workout_plan_detail_screen.dart';
 import 'screens/workout/training/log_exercise_screen.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  initializeDateFormatting().then((_) => runApp(MyApp()));
+}
 
 class MyApp extends StatefulWidget {
   @override
