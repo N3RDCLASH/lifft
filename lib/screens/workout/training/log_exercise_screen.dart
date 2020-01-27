@@ -11,6 +11,72 @@ class LogExercise extends StatefulWidget {
 }
 
 class _LogExerciseState extends State<LogExercise> {
+  bool btnPressed = false;
+
+  void _showConfirmDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Please review data"),
+          content: Column(children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('Sets'),
+                SizedBox(width: 20),
+                Text('Weight (kg)'),
+                SizedBox(width: 20),
+                Text('Reps'),
+              ],
+            ),
+            ...sets
+          ]),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: btnPressed == false
+                  ? Text("Save")
+                  : CircularProgressIndicator(),
+              onPressed: () {
+                setState(() {
+                  btnPressed = true;
+                });
+
+                List logs = [];
+
+                for (int i = 0; i < weightControllers.length; i++) {
+                  Map setMap = {
+                    'set': i + 1,
+                    'weight': weightControllers[i].text,
+                    'reps': repsControllers[i].text,
+                  };
+
+                  logs.add(setMap);
+                }
+
+                Firestore.instance.collection('logs').add({
+                  'exercise': widget.ds['name'],
+                  'date': DateTime.now(),
+                  'logs': logs,
+                }).then((onValue) {
+                  print('log created ${onValue.documentID}');
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }).catchError((onError) => print(onError));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   _getMuscleIcon(String muscleGroup) {
     switch (muscleGroup) {
       case "Abs":
@@ -78,7 +144,20 @@ class _LogExerciseState extends State<LogExercise> {
   static TextEditingController rCtrl2 = TextEditingController();
   static TextEditingController rCtrl3 = TextEditingController();
 
-  List setMaps = List(100);
+  List weightControllers = [];
+  List repsControllers = [];
+
+  void initState() {
+    super.initState();
+
+    weightControllers.add(wCtrl1);
+    weightControllers.add(wCtrl2);
+    weightControllers.add(wCtrl3);
+
+    repsControllers.add(rCtrl1);
+    repsControllers.add(rCtrl2);
+    repsControllers.add(rCtrl3);
+  }
 
   List<Widget> sets = [
     Row(
@@ -150,14 +229,15 @@ class _LogExerciseState extends State<LogExercise> {
   ];
 
   int setCount = 3;
-  List controllers = [];
 
   _addNewSet() {
     setState(() {
       setCount++;
-      TextEditingController ctr = TextEditingController();
+      TextEditingController wCtr = TextEditingController();
+      TextEditingController rCtr = TextEditingController();
 
-      controllers.add(ctr);
+      weightControllers.add(wCtr);
+      repsControllers.add(rCtr);
 
       sets.add(
         Row(
@@ -167,7 +247,7 @@ class _LogExerciseState extends State<LogExercise> {
             SizedBox(width: 20),
             Flexible(
               child: TextField(
-                controller: ctr,
+                controller: wCtr,
                 decoration: InputDecoration(hintText: '20'),
                 keyboardType: TextInputType.number,
               ),
@@ -175,6 +255,7 @@ class _LogExerciseState extends State<LogExercise> {
             SizedBox(width: 20),
             Flexible(
               child: TextField(
+                controller: rCtr,
                 decoration: InputDecoration(hintText: '12'),
                 keyboardType: TextInputType.number,
               ),
@@ -208,48 +289,39 @@ class _LogExerciseState extends State<LogExercise> {
               ],
             ),
             ...sets,
-            FlatButton(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.add),
-                  Text('new set'),
-                ],
-              ),
-              onPressed: _addNewSet,
+            ButtonBar(
+              children: <Widget>[
+                FlatButton(
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.add),
+                      Text('new set'),
+                    ],
+                  ),
+                  onPressed: _addNewSet,
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      if (sets.isNotEmpty &&
+                          weightControllers.isNotEmpty &&
+                          repsControllers.isNotEmpty) {
+                        sets.remove(sets.last);
+                        weightControllers.remove(weightControllers.last);
+                        repsControllers.remove(repsControllers.last);
+                      }
+                    });
+                  },
+                ),
+              ],
             ),
             RaisedButton(
               child: Text('Log set & rest'),
-              onPressed: () {
-                // try {
-                //   Firestore.instance.collection('logs').add({
-                //     'exercise': widget.ds['name'],
-
-                //   });
-                // } catch (e) {
-                //   print(e);
-                // }
-
-                setMaps[0] = {
-                  'set': 1,
-                  'weight': wCtrl1.text,
-                  'reps': rCtrl1.text,
-                };
-
-                setMaps[1] = {
-                  'set': 2,
-                  'weight': wCtrl2.text,
-                  'reps': rCtrl2.text,
-                };
-
-                setMaps[2] = {
-                  'set': 3,
-                  'weight': wCtrl3.text,
-                  'reps': rCtrl3.text,
-                };
-
-                // print(setMaps);
-                print(sets[0]);
-              },
+              onPressed: _showConfirmDialog,
             ),
           ],
         ),
