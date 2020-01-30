@@ -18,6 +18,7 @@ class LoginState extends State<Login> {
   String email = '';
   String password = '';
   String error = '';
+  TextEditingController resetCtr = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +36,18 @@ class LoginState extends State<Login> {
                   onChanged: (val) {
                     setState(() => email = val);
                   },
+                  cursorColor: white_color,
                   style: white_text,
                   decoration: const InputDecoration(
+                    focusedBorder: white_border,
                     enabledBorder: white_border,
                     labelStyle: white_text,
                     icon: Icon(
                       Icons.email,
                       color: white_color,
                     ),
-                    // hintText: 'What do people call you?',
+                    hintText: 'Enter your email...',
+                    hintStyle: white_text,
                     labelText: 'Email ',
                   ),
                 ),
@@ -58,9 +62,11 @@ class LoginState extends State<Login> {
                   onChanged: (val) {
                     setState(() => password = val);
                   },
+                  cursorColor: white_color,
                   style: white_text,
                   decoration: const InputDecoration(
                     // style
+                    focusedBorder: white_border,
                     enabledBorder: white_border,
                     labelStyle: white_text,
                     // counterStyle: white_text,
@@ -68,9 +74,84 @@ class LoginState extends State<Login> {
                       Icons.lock,
                       color: white_color,
                     ),
-                    // hintText: 'What do people call you?',
+                    hintText: 'Enter your password...',
+                    hintStyle: white_text,
                     labelText: 'Password ',
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40, 10, 40, 0),
+                child: Container(
+                  child: Material(
+                    child: InkWell(
+                      splashColor: Colors.grey,
+                      child: Container(
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            color: white_color,
+                            decoration: TextDecoration.underline,
+                            decorationStyle: TextDecorationStyle.solid,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          child: AlertDialog(
+                            backgroundColor: background_color1,
+                            content: Form(
+                              child: Container(
+                                height: MediaQuery.of(context).size.height * .2,
+                                child: Column(
+                                  children: <Widget>[
+                                    TextFormField(
+                                      style: white_text,
+                                      cursorColor: white_color,
+                                      controller: resetCtr,
+                                      keyboardType: TextInputType.emailAddress,
+                                      decoration: InputDecoration(
+                                        focusedBorder: white_border,
+                                        enabledBorder: white_border,
+                                        border: white_border,
+                                        labelText: 'Email Address',
+                                        labelStyle: white_text,
+                                        hintText: 'Enter your email address',
+                                        hintStyle: white_text,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20.0),
+                                      child: FlatButton(
+                                        child: Text(
+                                          'Reset Password',
+                                          style: white_text,
+                                        ),
+                                        color: main_color1,
+                                        onPressed: () {
+                                          print(resetCtr.text);
+                                          if (resetCtr.text != null ||
+                                              resetCtr.text != '') {
+                                            _auth.resetPassword(resetCtr.text);
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                        // _auth.resetPassword(email);
+                      },
+                    ),
+                    color: Colors.transparent,
+                  ),
+                  // color: Colors.orange,
                 ),
               ),
               Column(
@@ -80,7 +161,7 @@ class LoginState extends State<Login> {
                     height: 20,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(50, 20, 35, 0),
+                    padding: const EdgeInsets.fromLTRB(50, 0, 35, 0),
                     child: RaisedButton(
                       onPressed: () async {
                         dynamic result = await _auth
@@ -96,20 +177,23 @@ class LoginState extends State<Login> {
                       padding: const EdgeInsets.all(0.0),
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(20)),
-                      child: Container(
-                        width: 250,
-                        decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[main_color1, main_color2],
+                      child: InkWell(
+                        splashColor: Colors.grey,
+                        child: Container(
+                          width: 250,
+                          decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: <Color>[main_color1, main_color2],
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(80.0))),
+                          padding: const EdgeInsets.all(10.0),
+                          child: Center(
+                            child: const Text(
+                              'Log In',
+                              style:
+                                  TextStyle(fontSize: 18, fontFamily: 'Roboto'),
                             ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(80.0))),
-                        padding: const EdgeInsets.all(10.0),
-                        child: Center(
-                          child: const Text(
-                            'Log In',
-                            style:
-                                TextStyle(fontSize: 18, fontFamily: 'Roboto'),
                           ),
                         ),
                       ),
@@ -135,7 +219,7 @@ class LoginState extends State<Login> {
                         padding: const EdgeInsets.all(10.0),
                         child: Row(children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(8,0,8,0),
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                             child: Container(
                               width: MediaQuery.of(context).size.width * .06,
                               child: Image.asset(
@@ -146,8 +230,10 @@ class LoginState extends State<Login> {
                           ),
                           const Text(
                             'Sign in with Google',
-                            style:
-                                TextStyle(fontSize: 18, fontFamily: 'Roboto', color: background_color1),
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: 'Roboto',
+                                color: background_color1),
                           ),
                         ]),
                       ),
