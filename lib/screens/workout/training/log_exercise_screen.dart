@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LogExercise extends StatefulWidget {
-  final DocumentSnapshot ds;
+  final List ds;
 
   LogExercise(this.ds);
 
@@ -61,9 +61,11 @@ class _LogExerciseState extends State<LogExercise> {
                 }
 
                 Firestore.instance.collection('logs').add({
-                  'exercise': widget.ds['name'],
+                  'exercise': widget.ds[0]['name'],
                   'date': DateTime.now(),
                   'logs': logs,
+                  'workoutName': widget.ds[1]['workoutName'],
+                  'workoutDay': widget.ds[2],
                 }).then((onValue) {
                   print('log created ${onValue.documentID}');
                   Navigator.pop(context);
@@ -270,14 +272,14 @@ class _LogExerciseState extends State<LogExercise> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.ds['name']),
+        title: Text(widget.ds[0]['name']),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            _getMuscleIcon(widget.ds['muscleGroup']),
-            Text(widget.ds['description']),
+            _getMuscleIcon(widget.ds[0]['muscleGroup']),
+            Text(widget.ds[0]['description']),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

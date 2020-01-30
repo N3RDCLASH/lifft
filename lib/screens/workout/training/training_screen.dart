@@ -11,7 +11,7 @@ class Training extends StatefulWidget {
 class _TrainingState extends State<Training> {
   List wds = [];
 
-  _getWorkoutDays(var ds) {
+  _getWorkoutDays(DocumentSnapshot ds) {
     List<Widget> days = [];
     List<WorkoutDay> d = [];
     ds['workoutDays'].forEach((k, v) {
@@ -31,7 +31,10 @@ class _TrainingState extends State<Training> {
             // style: TextStyle(color: Colors.white),
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/log_workout');
+            Navigator.pushNamed(context, '/log_workout', arguments: [
+              ds,
+              d.name,
+            ]);
           },
         )));
 

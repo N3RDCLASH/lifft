@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
               WorkoutPlanDetail(settings.arguments),
           '/edit_workout': (context) => EditWorkout(settings.arguments),
           '/edit_workout_day': (context) => EditWorkoutDay(settings.arguments),
-          '/log_workout': (context) => LogWorkout(),
+          '/log_workout': (context) => LogWorkout(settings.arguments),
           '/add_exercise': (context) => AddExercise(),
           '/log_exercise': (context) => LogExercise(settings.arguments),
         };

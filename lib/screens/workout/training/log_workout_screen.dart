@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LogWorkout extends StatefulWidget {
+  final List ds;
+
+  LogWorkout(this.ds);
+
   @override
   _LogWorkoutState createState() => _LogWorkoutState();
 }
@@ -116,7 +120,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                             subtitle: Text(ds['description']),
                             onTap: () => Navigator.of(context).pushNamed(
                               '/log_exercise',
-                              arguments: ds,
+                              arguments: [ds, widget.ds[0], widget.ds[1]],
                             ),
                           );
                         }),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -15,14 +16,32 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    _events = {};
+
+    Firestore.instance
+        .collection("logs")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      setState(() {
+        snapshot.documents.forEach((f) {
+          _events[DateTime.parse(f.data['date'].toDate().toString())
+              .add(Duration(minutes: 1))] = [
+            [
+              f.data['exercise'],
+              f.data['logs'],
+              f.data['workoutName'],
+              f.data['workoutDay'],
+            ],
+          ];
+        });
+      });
+    });
+
     final _selectedDay = DateTime.now();
 
-    _events = {
-      DateTime.now().add(Duration(days: 2)): ['Meow 02'],
-      DateTime.now().add(Duration(days: 1)): ['Meow 01'],
-    };
-
     _selectedEvents = _events[_selectedDay] ?? [];
+
     _calendarController = CalendarController();
 
     _animationController = AnimationController(
@@ -61,6 +80,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
         children: <Widget>[
           SafeArea(child: _buildTableCalendar()),
           const SizedBox(height: 8.0),
+          Text('Workout'),
           Expanded(child: _buildEventList()),
         ],
       ),
@@ -91,31 +111,6 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildEventsMarker(DateTime date, List events) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        color: _calendarController.isSelected(date)
-            ? Colors.brown[500]
-            : _calendarController.isToday(date)
-                ? Colors.brown[300]
-                : Colors.blue[400],
-      ),
-      width: 16.0,
-      height: 16.0,
-      child: Center(
-        child: Text(
-          '${events.length}',
-          style: TextStyle().copyWith(
-            color: Colors.white,
-            fontSize: 12.0,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildEventList() {
     return ListView(
       children: _selectedEvents
@@ -127,7 +122,8 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
-                  title: Text(event.toString()),
+                  title: Text(event[3]),
+                  subtitle: Text(event[2]),
                   onTap: () => print('$event tapped!'),
                 ),
               ))
