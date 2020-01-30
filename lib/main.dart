@@ -1,3 +1,4 @@
+import 'package:LIFFT/screens/schedule/schedule_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import './screens/home_screen.dart';
@@ -37,6 +38,7 @@ class _MyAppState extends State<MyApp> {
           '/log_workout': (context) => LogWorkout(settings.arguments),
           '/add_exercise': (context) => AddExercise(),
           '/log_exercise': (context) => LogExercise(settings.arguments),
+          '/schedule_detail': (context) => ScheduleDetail(settings.arguments),
         };
         WidgetBuilder builder = routes[settings.name];
         return MaterialPageRoute(builder: (ctx) => builder(ctx));

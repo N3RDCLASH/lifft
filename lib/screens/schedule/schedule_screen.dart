@@ -32,6 +32,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
               f.data['logs'],
               f.data['workoutName'],
               f.data['workoutDay'],
+              f.data['date'],
             ],
           ];
         });
@@ -124,7 +125,11 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                 child: ListTile(
                   title: Text(event[3]),
                   subtitle: Text(event[2]),
-                  onTap: () => print('$event tapped!'),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    '/schedule_detail',
+                    arguments: event,
+                  ),
                 ),
               ))
           .toList(),
