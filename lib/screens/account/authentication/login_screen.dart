@@ -1,12 +1,9 @@
 import 'package:LIFFT/services/auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase';
 
-import '../../style/theme.dart';
+import '../../../style/theme.dart';
 
 final _auth = AuthService();
-
-//state
 
 class Login extends StatefulWidget {
   @override

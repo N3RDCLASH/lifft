@@ -1,8 +1,8 @@
-import 'package:LIFFT/screens/authentication/login_screen.dart';
-import 'package:LIFFT/screens/authentication/register_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../style/theme.dart';
+import '../../../style/theme.dart';
+import 'login_screen.dart';
+import 'register_screen.dart';
 
 class Authentication extends StatefulWidget {
   @override

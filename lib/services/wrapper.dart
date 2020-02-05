@@ -1,5 +1,5 @@
 import 'package:LIFFT/models/user.dart';
-import 'package:LIFFT/screens/authentication/authentication_screen.dart';
+import 'package:LIFFT/screens/account/authentication/authentication_screen.dart';
 import 'package:provider/provider.dart';
 import '../screens/home_screen.dart';
 import 'package:flutter/material.dart';
