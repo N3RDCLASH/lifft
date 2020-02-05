@@ -24,17 +24,15 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         .then((QuerySnapshot snapshot) {
       setState(() {
         snapshot.documents.forEach((f) {
-          if (DateFormat('EEEE').format(
+          if (DateFormat("yyyy-MM-dd").format(
                   DateTime.parse(widget.event[4].toDate().toString())) ==
-              DateFormat('EEEE')
+              DateFormat("yyyy-MM-dd")
                   .format(DateTime.parse(f.data['date'].toDate().toString()))) {
             m.add(f);
           }
         });
       });
       isLoaded = true;
-
-      print(m);
     });
   }
 
