@@ -3,6 +3,7 @@ import 'package:LIFFT/screens/schedule/schedule_detail_screen.dart';
 import 'package:LIFFT/services/auth.dart';
 import 'package:LIFFT/services/wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'screens/schedule/edit_schedule_detail_screen.dart';
@@ -15,8 +16,12 @@ import 'screens/workout/workout_plans/edit_workoutday_screen.dart';
 import 'screens/workout/workout_plans/workout_plan_detail_screen.dart';
 import 'screens/workout/training/log_exercise_screen.dart';
 
-void main() {
-  initializeDateFormatting().then((_) => runApp(MyApp()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    initializeDateFormatting().then((_) => runApp(new MyApp()));
+  });
 }
 
 class MyApp extends StatefulWidget {
