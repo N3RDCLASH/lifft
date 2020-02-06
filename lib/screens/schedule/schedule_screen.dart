@@ -1,5 +1,7 @@
+import 'package:LIFFT/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Schedule extends StatefulWidget {
@@ -17,10 +19,26 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
+    _calendarController = CalendarController();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _animationController.forward();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final user = Provider.of<User>(context);
+
     _events = {};
 
     Firestore.instance
         .collection("logs")
+        .where('uid', isEqualTo: user.uid)
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       setState(() {
@@ -42,15 +60,6 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
     final _selectedDay = DateTime.now();
 
     _selectedEvents = _events[_selectedDay] ?? [];
-
-    _calendarController = CalendarController();
-
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 400),
-    );
-
-    _animationController.forward();
   }
 
   @override

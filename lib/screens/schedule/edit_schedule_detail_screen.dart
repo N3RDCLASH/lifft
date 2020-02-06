@@ -61,6 +61,7 @@ class _EditScheduleDetailState extends State<EditScheduleDetail> {
                 }).then((onValue) {
                   Navigator.pop(context);
                   Navigator.pop(context);
+                  Navigator.pop(context);
                 }).catchError((onError) => print(onError));
               },
             ),

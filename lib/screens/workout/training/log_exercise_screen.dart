@@ -1,5 +1,7 @@
+import 'package:LIFFT/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LogExercise extends StatefulWidget {
   final List ds;
@@ -13,7 +15,7 @@ class LogExercise extends StatefulWidget {
 class _LogExerciseState extends State<LogExercise> {
   bool btnPressed = false;
 
-  void _showConfirmDialog() {
+  void _showConfirmDialog(String uid) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -61,6 +63,7 @@ class _LogExerciseState extends State<LogExercise> {
                 }
 
                 Firestore.instance.collection('logs').add({
+                  'uid': uid,
                   'exercise': widget.ds[0]['name'],
                   'date': DateTime.now(),
                   'logs': logs,
@@ -270,6 +273,8 @@ class _LogExerciseState extends State<LogExercise> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.ds[0]['name']),
@@ -323,7 +328,7 @@ class _LogExerciseState extends State<LogExercise> {
             ),
             RaisedButton(
               child: Text('Log set & rest'),
-              onPressed: _showConfirmDialog,
+              onPressed: () => _showConfirmDialog(user.uid),
             ),
           ],
         ),

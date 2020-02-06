@@ -1,7 +1,9 @@
+import 'package:LIFFT/models/user.dart';
 import 'package:LIFFT/models/workout_plan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CreateWorkout extends StatefulWidget {
   @override
@@ -22,12 +24,14 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   }
 
   void _createWorkoutPlan(
+    String uid,
     String workoutName,
     String workoutDesc,
     Map<String, String> workoutDays,
   ) async {
     DocumentReference ref =
         await Firestore.instance.collection("workout_plans").add({
+      'uid': uid,
       'workoutName': workoutName,
       'workoutDesc': workoutDesc,
       'workoutDays': workoutDays,
@@ -38,6 +42,8 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     workoutDays.sort((a, b) {
       var adate = a.day;
       var bdate = b.day;
@@ -79,6 +85,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                     print(workoutDaysMap);
 
                     _createWorkoutPlan(
+                      user.uid,
                       plan.workoutName,
                       plan.workoutDesc,
                       workoutDaysMap,

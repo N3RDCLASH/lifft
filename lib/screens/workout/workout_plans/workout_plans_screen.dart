@@ -1,7 +1,9 @@
+import 'package:LIFFT/models/user.dart';
 import 'package:LIFFT/models/workout_day_model.dart';
 import 'package:LIFFT/models/workout_plan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WorkoutPlan extends StatefulWidget {
   @override
@@ -46,10 +48,15 @@ class _WorkoutPlanState extends State<WorkoutPlan> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xff24324b),
       body: StreamBuilder(
-        stream: Firestore.instance.collection('workout_plans').snapshots(),
+        stream: Firestore.instance
+            .collection('workout_plans')
+            .where('uid', isEqualTo: user.uid)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Text("Loading..");

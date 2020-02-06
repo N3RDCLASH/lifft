@@ -10,18 +10,6 @@ class AddWorkoutDay extends StatefulWidget {
 class _AddWorkoutDayState extends State<AddWorkoutDay> {
   TextEditingController workoutNameController = new TextEditingController();
 
-  // String selectedDay;
-
-  // List<String> days = <String>[
-  //   "Monday",
-  //   "Tuesday",
-  //   "Wednesday",
-  //   "Thursday",
-  //   "Friday",
-  //   "Saturday",
-  //   "Sunday"
-  // ];
-
   DateTime _date = DateTime.now();
 
   Future _selectDate(BuildContext context) async {
@@ -57,28 +45,6 @@ class _AddWorkoutDayState extends State<AddWorkoutDay> {
                 hintText: "Ex. Chest and triceps day",
               ),
             ),
-            // DropdownButton<String>(
-            //   hint: Text("Select item"),
-            //   value: selectedDay,
-            //   onChanged: (String value) {
-            //     setState(() {
-            //       selectedDay = value;
-            //     });
-            //   },
-            //   items: days.map((String day) {
-            //     return DropdownMenuItem<String>(
-            //       value: day,
-            //       child: Row(
-            //         children: <Widget>[
-            //           Text(
-            //             day,
-            //             style: TextStyle(color: Colors.black),
-            //           ),
-            //         ],
-            //       ),
-            //     );
-            //   }).toList(),
-            // ),
             RaisedButton(
               child: Text('Select day'),
               onPressed: () => _selectDate(context),

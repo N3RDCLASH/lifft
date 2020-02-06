@@ -1,7 +1,9 @@
+import 'package:LIFFT/models/user.dart';
 import 'package:LIFFT/models/workout_day_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Training extends StatefulWidget {
   @override
@@ -43,10 +45,13 @@ class _TrainingState extends State<Training> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     return StreamBuilder(
         stream: Firestore.instance
             .collection('workout_plans')
             .where('activeWorkout', isEqualTo: true)
+            .where('uid', isEqualTo: user.uid)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {

@@ -69,29 +69,6 @@ class _EditWorkoutDayState extends State<EditWorkoutDay> {
                 hintText: "Ex. Chest and triceps day",
               ),
             ),
-            // DropdownButton<String>(
-            //   hint: Text("Select item"),
-            //   value: selectedDay,
-            //   onChanged: (String value) {
-            //     setState(() {
-            //       selectedDay = value;
-            //     });
-            //   },
-            //   items: days.map((String day) {
-            //     return DropdownMenuItem<String>(
-            //       value: day,
-            //       child: Row(
-            //         children: <Widget>[
-            //           Text(
-            //             day,
-            //             style: TextStyle(color: Colors.black),
-            //           ),
-            //         ],
-            //       ),
-            //     );
-            //   }).toList(),
-            // ),
-
             RaisedButton(
               child: Text('Select day'),
               onPressed: () => _selectDate(context),

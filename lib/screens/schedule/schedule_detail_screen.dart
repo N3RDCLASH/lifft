@@ -1,6 +1,8 @@
+import 'package:LIFFT/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ScheduleDetail extends StatefulWidget {
   final event;
@@ -13,24 +15,27 @@ class ScheduleDetail extends StatefulWidget {
 
 class _ScheduleDetailState extends State<ScheduleDetail> {
   bool isLoaded = false;
-  List m = [];
+  List m = new List(100);
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final user = Provider.of<User>(context);
 
     Firestore.instance
         .collection('logs')
+        .where('uid', isEqualTo: user.uid)
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       setState(() {
-        snapshot.documents.forEach((f) {
+        for (var i = 0; i < snapshot.documents.length; i++) {
           if (DateFormat("yyyy-MM-dd").format(
                   DateTime.parse(widget.event[4].toDate().toString())) ==
-              DateFormat("yyyy-MM-dd")
-                  .format(DateTime.parse(f.data['date'].toDate().toString()))) {
-            m.add(f);
+              DateFormat("yyyy-MM-dd").format(DateTime.parse(
+                  snapshot.documents[i].data['date'].toDate().toString()))) {
+            m[i] = snapshot.documents[i];
           }
-        });
+        }
       });
       isLoaded = true;
     });
@@ -61,6 +66,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                         .delete();
                     Navigator.pop(context);
                     Navigator.pop(context);
+                    Navigator.pop(context);
                     m.remove(ds);
                   } catch (e) {
                     print(e.toString());
@@ -84,36 +90,38 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
           ? ListView.builder(
               itemCount: m.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(m[index].data['exercise']),
-                  subtitle: Text(m[index].data['logs'].toString()),
-                  trailing: PopupMenuButton(
-                    color: Colors.white,
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: 1,
-                        child: FlatButton(
-                          child: Text('Edit'),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(
-                              '/edit_schedule_detail',
-                              arguments: m[index],
-                            );
-                          },
+                return m[index] != null
+                    ? ListTile(
+                        title: Text(m[index].data['exercise']),
+                        subtitle: Text(m[index].data['logs'].toString()),
+                        trailing: PopupMenuButton(
+                          color: Colors.white,
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              value: 1,
+                              child: FlatButton(
+                                child: Text('Edit'),
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                    '/edit_schedule_detail',
+                                    arguments: m[index],
+                                  );
+                                },
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 2,
+                              child: FlatButton(
+                                child: Text('Delete'),
+                                onPressed: () {
+                                  _showDeleteDialog(m[index]);
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      PopupMenuItem(
-                        value: 2,
-                        child: FlatButton(
-                          child: Text('Delete'),
-                          onPressed: () {
-                            _showDeleteDialog(m[index]);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                      )
+                    : Container();
               },
             )
           : CircularProgressIndicator(),
