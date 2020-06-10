@@ -2,7 +2,7 @@ import 'package:LIFFT/models/user.dart';
 import 'package:LIFFT/screens/schedule/schedule_detail_screen.dart';
 import 'package:LIFFT/services/auth.dart';
 import 'package:LIFFT/services/wrapper.dart';
-import 'package:LIFFT/ui/views/signin/signin_view.dart';
+import 'package:LIFFT/ui/views/auth/auth_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -68,7 +68,7 @@ class Lifft extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Test",
-      home: SignInView(),
+      home: AuthView(),
     );
   }
 }
