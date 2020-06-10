@@ -20,6 +20,9 @@ dependencies:
   provider: ^4.0.1
   cached_network_image: ^2.0.0
   table_calendar: ^2.2.2
+  #state_management
+  stacked: ^1.5.7+1
+
 
   cupertino_icons: ^0.1.2
 
