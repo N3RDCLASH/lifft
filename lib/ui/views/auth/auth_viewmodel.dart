@@ -1,3 +1,5 @@
 import 'package:stacked/stacked.dart';
 
-class AuthViewModel extends BaseViewModel {}
+class AuthViewModel extends BaseViewModel {
+  void navigateToHome() {}
+}
