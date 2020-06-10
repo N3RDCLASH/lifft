@@ -25,6 +25,6 @@ class StartupViewModel extends BaseViewModel {
   }
 
   void navigateToHome() {
-    _navigationService.replaceWith(Routes.homeView);
+    _navigationService.replaceWith(Routes.homeViewRoute);
   }
 }

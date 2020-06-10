@@ -10,15 +10,18 @@ import 'package:auto_route/auto_route.dart';
 import 'package:LIFFT/ui/views/startup/startup_view.dart';
 import 'package:LIFFT/ui/views/auth/auth_view.dart';
 import 'package:LIFFT/ui/views/home/home_view.dart';
+import 'package:LIFFT/ui/views/account/account_view.dart';
 
 abstract class Routes {
   static const startupViewRoute = '/';
   static const authViewRoute = '/auth-view-route';
-  static const homeView = '/home-view';
+  static const homeViewRoute = '/home-view-route';
+  static const accountViewRoute = '/account-view-route';
   static const all = {
     startupViewRoute,
     authViewRoute,
-    homeView,
+    homeViewRoute,
+    accountViewRoute,
   };
 }
 
@@ -43,9 +46,14 @@ class Router extends RouterBase {
           builder: (context) => AuthView(),
           settings: settings,
         );
-      case Routes.homeView:
+      case Routes.homeViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => HomeView(),
+          settings: settings,
+        );
+      case Routes.accountViewRoute:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => AccountView(),
           settings: settings,
         );
       default:

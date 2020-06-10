@@ -1,4 +1,6 @@
 import 'package:LIFFT/models/menu_item_model.dart';
+import 'package:LIFFT/ui/views/account/account_view.dart';
+import 'package:LIFFT/ui/views/account/account_viewmodel.dart';
 import 'package:LIFFT/ui/views/meals/meals_view.dart';
 import 'package:LIFFT/ui/views/startup/startup_view.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,8 @@ class HomeViewModel extends BaseViewModel {
   List<MenuItem> _menuItems = [
     MenuItem(
       icon: Icon(Icons.account_circle),
-      name: "Dashboard",
-      page: MealsView(),
+      name: "Account",
+      page: AccountView(),
     ),
     MenuItem(
       icon: Icon(Icons.calendar_today),

@@ -25,6 +25,6 @@ class MealsViewModel extends BaseViewModel {
   }
 
   void navigateToHome() {
-    _navigationService.navigateTo(Routes.homeView);
+    _navigationService.navigateTo(Routes.homeViewRoute);
   }
 }

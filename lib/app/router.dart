@@ -1,3 +1,4 @@
+import 'package:LIFFT/ui/views/account/account_view.dart';
 import 'package:LIFFT/ui/views/auth/auth_view.dart';
 import 'package:LIFFT/ui/views/home/home_view.dart';
 import 'package:LIFFT/ui/views/startup/startup_view.dart';
@@ -8,5 +9,6 @@ class $Router {
   @initial
   StartupView startupViewRoute;
   AuthView authViewRoute;
-  HomeView homeView;
+  HomeView homeViewRoute;
+  AccountView accountViewRoute;
 }
