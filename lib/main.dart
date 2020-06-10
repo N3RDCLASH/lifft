@@ -1,3 +1,5 @@
+import 'package:LIFFT/app/locator.dart';
+import 'package:LIFFT/app/router.gr.dart';
 import 'package:LIFFT/models/user.dart';
 import 'package:LIFFT/screens/schedule/schedule_detail_screen.dart';
 import 'package:LIFFT/services/auth.dart';
@@ -19,9 +21,12 @@ import 'screens/workout/training/log_exercise_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    initializeDateFormatting().then((_) => runApp(new Lifft()));
+    initializeDateFormatting().then((_) {
+      runApp(new Lifft());
+    });
   });
 }
 
@@ -68,7 +73,8 @@ class Lifft extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Test",
-      home: AuthView(),
+      initialRoute: Routes.startupViewRoute,
+      onGenerateRoute: Router().onGenerateRoute,
     );
   }
 }
