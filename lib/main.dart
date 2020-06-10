@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'screens/schedule/edit_schedule_detail_screen.dart';
 import 'screens/workout/training/add_exercise_screen.dart';
 import 'screens/workout/training/log_workout_screen.dart';
@@ -75,6 +76,7 @@ class Lifft extends StatelessWidget {
       title: "Test",
       initialRoute: Routes.startupViewRoute,
       onGenerateRoute: Router().onGenerateRoute,
+      navigatorKey: locator<NavigationService>().navigatorKey,
     );
   }
 }
