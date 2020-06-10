@@ -7,13 +7,7 @@ class MealsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MealsViewModel>.reactive(
         builder: (context, model, child) {
-          return Scaffold(
-            body: Center(
-              child: Center(
-                child: Text("Meals"),
-              ),
-            ),
-          );
+          return Container();
         },
         viewModelBuilder: () => MealsViewModel());
   }

@@ -7,6 +7,11 @@ import 'package:stacked/stacked.dart';
 class HomeViewModel extends BaseViewModel {
   List<MenuItem> _menuItems = [
     MenuItem(
+      icon: Icon(Icons.account_circle),
+      name: "Dashboard",
+      page: MealsView(),
+    ),
+    MenuItem(
       icon: Icon(Icons.calendar_today),
       name: "Meals",
       page: MealsView(),
@@ -14,11 +19,6 @@ class HomeViewModel extends BaseViewModel {
     MenuItem(
       icon: Icon(Icons.fitness_center),
       name: "Workout",
-      page: MealsView(),
-    ),
-    MenuItem(
-      icon: Icon(Icons.account_circle),
-      name: "Account",
       page: MealsView(),
     ),
   ];

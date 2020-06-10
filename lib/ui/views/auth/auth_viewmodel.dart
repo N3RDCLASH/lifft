@@ -7,6 +7,6 @@ class AuthViewModel extends BaseViewModel {
   NavigationService _navigationService = locator<NavigationService>();
 
   void navigateToHome() {
-    _navigationService.navigateTo(Routes.homeView);
+    _navigationService.replaceWith(Routes.homeView);
   }
 }

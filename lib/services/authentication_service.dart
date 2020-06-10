@@ -5,12 +5,12 @@ class AuthenticationService {
 
   Future logInWithEmail(String email, String password) async {
     try {
-      var user = await _firebaseAuth.signInWithEmailAndPassword(
+      var authResult = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return user != null;
+      return authResult.user != null;
     } catch (e) {
       return e.message;
     }

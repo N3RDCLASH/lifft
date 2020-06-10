@@ -21,10 +21,10 @@ class StartupViewModel extends BaseViewModel {
   }
 
   void navigateToAuth() {
-    _navigationService.navigateTo(Routes.authViewRoute);
+    _navigationService.replaceWith(Routes.authViewRoute);
   }
 
   void navigateToHome() {
-    _navigationService.navigateTo(Routes.homeView);
+    _navigationService.replaceWith(Routes.homeView);
   }
 }
