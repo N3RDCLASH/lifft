@@ -2,7 +2,6 @@ import 'package:LIFFT/ui/views/auth/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../screens/account/authentication/register_screen.dart';
 import '../../../style/theme.dart';
 
 class AuthView extends StatelessWidget {
@@ -75,14 +74,63 @@ class AuthView extends StatelessWidget {
 
 //TODO: Move TO Smart Widget
 class Login extends ViewModelWidget<AuthViewModel> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
-  Widget build(BuildContext context, AuthViewModel model) {
-    return MaterialButton(
-      color: Colors.blue,
-      onPressed: () {
-        model.navigateToHome();
-      },
-      child: Text("login"),
-    );
-  }
+  Widget build(BuildContext context, AuthViewModel model) => Form(
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                validator: (value) => model.validateEmail(value),
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  focusedBorder: white_border,
+                  enabledBorder: white_border,
+                  labelStyle: white_text,
+                  icon: Icon(
+                    Icons.email,
+                    color: white_color,
+                  ),
+                  hintStyle: white_text,
+                  labelText: 'Email ',
+                ),
+              ),
+              TextFormField(
+                validator: (value) => model.validatePassword(value),
+                controller: _passwordController,
+                cursorColor: Colors.white,
+                style: white_text,
+                decoration: const InputDecoration(
+                  // style
+                  focusedBorder: white_border,
+                  enabledBorder: white_border,
+                  labelStyle: white_text,
+                  // counterStyle: white_text,
+                  icon: Icon(
+                    Icons.lock,
+                    color: white_color,
+                  ),
+                  hintText: 'Enter your password...',
+                  hintStyle: white_text,
+                  labelText: 'Password ',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ));
+}
+
+class Register extends ViewModelWidget<AuthViewModel> {
+  @override
+  Widget build(BuildContext context, AuthViewModel model) => Form(
+          child: Column(
+        children: <Widget>[
+          TextFormField(),
+          TextFormField(),
+        ],
+      ));
 }

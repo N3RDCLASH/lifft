@@ -9,4 +9,8 @@ class AuthViewModel extends BaseViewModel {
   void navigateToHome() {
     _navigationService.replaceWith(Routes.homeViewRoute);
   }
+
+  validateEmail(String value) {}
+
+  validatePassword(String value) {}
 }

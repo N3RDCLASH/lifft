@@ -1,24 +1,9 @@
 import 'package:LIFFT/app/locator.dart';
 import 'package:LIFFT/app/router.gr.dart';
-import 'package:LIFFT/models/user.dart';
-import 'package:LIFFT/screens/schedule/schedule_detail_screen.dart';
-import 'package:LIFFT/services/auth.dart';
-import 'package:LIFFT/services/wrapper.dart';
-import 'package:LIFFT/ui/views/auth/auth_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'screens/schedule/edit_schedule_detail_screen.dart';
-import 'screens/workout/training/add_exercise_screen.dart';
-import 'screens/workout/training/log_workout_screen.dart';
-import 'screens/workout/workout_plans/add_workoutday_screen.dart';
-import 'screens/workout/workout_plans/create_workout_screen.dart';
-import 'screens/workout/workout_plans/edit_workout_screen.dart';
-import 'screens/workout/workout_plans/edit_workoutday_screen.dart';
-import 'screens/workout/workout_plans/workout_plan_detail_screen.dart';
-import 'screens/workout/training/log_exercise_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
