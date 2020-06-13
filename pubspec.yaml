@@ -14,15 +14,15 @@ dependencies:
   http: ^0.12.0+4
   intl: ^0.16.1
   firebase_core: ^0.4.3+1
-  firebase_auth: ^0.15.3
+  firebase_auth: ^0.16.1
   google_sign_in: ^4.1.1
-  cloud_firestore: ^0.13.0+1
+  cloud_firestore: ^0.13.6
   provider: ^4.0.1
   cached_network_image: ^2.0.0
   table_calendar: ^2.2.2
   #state_management
-  stacked: ^1.5.7+1
-  stacked_services: ^0.3.4
+  stacked: ^1.6.0
+  stacked_services: ^0.4.0
 
   #routing
   auto_route: ^0.5.0

@@ -1,4 +1,3 @@
-import 'package:LIFFT/ui/views/auth/auth_viewmodel.dart';
 import 'package:LIFFT/ui/views/register/register_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -21,8 +20,13 @@ class RegisterView extends StatelessWidget {
                     Expanded(
                       child: Container(
                         decoration: background_gradient,
-                        child: Container(
-                          child: Register(),
+                        child: ListView(
+                          children: <Widget>[
+                            AppBar(
+                              backgroundColor: Colors.transparent,
+                            ),
+                            Register(),
+                          ],
                         ),
                       ),
                     )
@@ -37,11 +41,6 @@ class RegisterView extends StatelessWidget {
 }
 
 class Register extends ViewModelWidget<RegisterViewModel> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmController =
-      TextEditingController();
-
   @override
   Widget build(BuildContext context, RegisterViewModel model) {
     return Form(
@@ -88,7 +87,7 @@ class Register extends ViewModelWidget<RegisterViewModel> {
                         ),
                       ),
                       child: TextFormField(
-                        controller: _emailController,
+                        controller: model.firstNameController,
                         validator: (val) => model.validateEmail(val),
                         decoration: InputDecoration(
                             labelText: "First name", border: InputBorder.none),
@@ -104,7 +103,7 @@ class Register extends ViewModelWidget<RegisterViewModel> {
                         ),
                       ),
                       child: TextFormField(
-                        controller: _emailController,
+                        controller: model.lastNameController,
                         validator: (val) => model.validateEmail(val),
                         decoration: InputDecoration(
                             labelText: "Last name", border: InputBorder.none),
@@ -120,7 +119,7 @@ class Register extends ViewModelWidget<RegisterViewModel> {
                         ),
                       ),
                       child: TextFormField(
-                        controller: _emailController,
+                        controller: model.emailController,
                         validator: (val) => model.validateEmail(val),
                         decoration: InputDecoration(
                             labelText: "Email", border: InputBorder.none),
@@ -136,20 +135,11 @@ class Register extends ViewModelWidget<RegisterViewModel> {
                         ),
                       ),
                       child: TextFormField(
-                        controller: _passwordController,
-                        obscureText: model.showPassword,
+                        controller: model.passwordController,
+                        obscureText: true,
                         validator: (val) => model.validatePassword(val),
                         decoration: InputDecoration(
-                            labelText: "Password",
-                            suffixIcon: IconButton(
-                              icon: model.showPassword
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
-                              onPressed: () {
-                                model.togglePassword();
-                              },
-                            ),
-                            border: InputBorder.none),
+                            labelText: "Password", border: InputBorder.none),
                       ),
                     ),
                     Container(
@@ -162,21 +152,11 @@ class Register extends ViewModelWidget<RegisterViewModel> {
                         ),
                       ),
                       child: TextFormField(
-                        controller: _passwordConfirmController,
-                        obscureText: model.showPassword,
+                        controller: model.passwordConfirmController,
+                        obscureText: true,
                         validator: (val) => model.validatePassword(val),
                         decoration: InputDecoration(
                             labelText: "Confirm Password",
-                            suffixIcon: IconButton(
-                              icon: model.showPassword
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
-                              onPressed: () {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                                model.togglePassword();
-                              },
-                            ),
                             border: InputBorder.none),
                       ),
                     ),
@@ -187,7 +167,14 @@ class Register extends ViewModelWidget<RegisterViewModel> {
                 height: 20,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  model.signUp(
+                    email: model.emailController.text,
+                    password: model.passwordController.text,
+                    fistName: model.firstNameController.text,
+                    lastName: model.lastNameController.text,
+                  );
+                },
                 child: Container(
                   height: 50,
                   width: MediaQuery.of(context).size.width * 0.5,
@@ -197,14 +184,28 @@ class Register extends ViewModelWidget<RegisterViewModel> {
                     ),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Center(
-                    child: Text(
-                      "Register",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Register",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      if (model.isBusy)
+                        SizedBox(
+                          height: 30.0,
+                          width: 30.0,
+                          child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                              strokeWidth: 3.0),
+                        ),
+                    ],
                   ),
                 ),
               ),

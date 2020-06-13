@@ -55,6 +55,6 @@ class AuthViewModel extends BaseViewModel {
   }
 
   navigateToSignUp() {
-    _navigationService.navigateTo(Routes.homeViewRoute);
+    _navigationService.navigateTo(Routes.registerViewRoute);
   }
 }

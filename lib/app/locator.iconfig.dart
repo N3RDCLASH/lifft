@@ -7,6 +7,7 @@
 import 'package:LIFFT/services/third_party_services_module.dart';
 import 'package:LIFFT/services/authentication_service.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:LIFFT/services/firestore_service.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
@@ -15,6 +16,8 @@ void $initGetIt(GetIt g, {String environment}) {
       () => thirdParyServicesModule.authenticationService);
   g.registerLazySingleton<DialogService>(
       () => thirdParyServicesModule.dialogService);
+  g.registerLazySingleton<FirestoreService>(
+      () => thirdParyServicesModule.firestoreService);
   g.registerLazySingleton<NavigationService>(
       () => thirdParyServicesModule.navigationService);
   g.registerLazySingleton<SnackbarService>(
@@ -26,6 +29,8 @@ class _$ThirdParyServicesModule extends ThirdParyServicesModule {
   AuthenticationService get authenticationService => AuthenticationService();
   @override
   DialogService get dialogService => DialogService();
+  @override
+  FirestoreService get firestoreService => FirestoreService();
   @override
   NavigationService get navigationService => NavigationService();
   @override
