@@ -13,4 +13,13 @@ class FirestoreService {
       return e.message;
     }
   }
+
+  Future getUser(String uid) async {
+    try {
+      var userData = await _userCollectionReference.document(uid).get();
+      return User.fromData(userData.data);
+    } catch (e) {
+      return e.message;
+    }
+  }
 }
