@@ -40,7 +40,7 @@ class AuthViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void signIn(String email, String password) {
+  Future<void> signIn(String email, String password) async {
     if (!_formKey.currentState.validate()) {
       _snackbarService.showCustomSnackBar(
         title: "Error",
@@ -50,7 +50,26 @@ class AuthViewModel extends BaseViewModel {
       );
       return;
     } else {
-      _authenticationService.logInWithEmail(email, password);
+      var result = await _authenticationService.logInWithEmail(email, password);
+      if (result is bool) {
+        if (result) {
+          _navigationService.replaceWith(Routes.homeViewRoute);
+        } else {
+          _snackbarService.showCustomSnackBar(
+            title: "Error",
+            message: "Sign up failure",
+            isDismissible: true,
+            duration: Duration(seconds: 3),
+          );
+        }
+      } else {
+        _snackbarService.showCustomSnackBar(
+          title: "Error",
+          message: result,
+          isDismissible: true,
+          duration: Duration(seconds: 3),
+        );
+      }
     }
   }
 
