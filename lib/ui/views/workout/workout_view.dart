@@ -74,7 +74,6 @@ class WorkoutCard extends ViewModelWidget<WorkoutViewModel> {
   WorkoutCard(this._workout);
   @override
   Widget build(BuildContext context, WorkoutViewModel model) {
-    print(_workout.workout[0].exercise);
     return Card(
       child: Container(
           padding: EdgeInsets.all(16),
@@ -97,8 +96,9 @@ class WorkoutCard extends ViewModelWidget<WorkoutViewModel> {
                           icon: Icon(Icons.more_vert), onPressed: () {}))
                 ],
               ),
-              for (WorkoutSet workoutSet in _workout.workout)
-                Text("${workoutSet.sets.length} x ${workoutSet.exercise}")
+              if (!model.isBusy)
+                for (WorkoutSet workoutSet in _workout.workout)
+                  Text("${workoutSet.sets.length} x ${workoutSet.exercise}")
             ],
           )),
     );
