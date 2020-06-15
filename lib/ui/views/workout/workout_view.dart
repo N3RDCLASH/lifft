@@ -10,17 +10,12 @@ class WorkoutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<WorkoutViewModel>.reactive(
-        builder: (context, model, child) {
-          return Scaffold(
-            backgroundColor: background_color1,
-            body: Padding(
+        builder: (context, model, child) => Container(
+              color: background_color1,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
-                    height: 60,
-                  ),
                   Text(
                     "Workout",
                     style: TextStyle(
@@ -64,8 +59,6 @@ class WorkoutView extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        },
         viewModelBuilder: () => WorkoutViewModel());
   }
 }

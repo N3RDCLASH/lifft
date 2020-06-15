@@ -83,6 +83,8 @@ class FirestoreService {
         _exerciseStreamController.add(exercises);
       }
     });
+
+    return _exerciseStreamController.stream;
   }
 
   Future<Exercise> getExercise(String id) async {

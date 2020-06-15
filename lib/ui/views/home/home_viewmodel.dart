@@ -1,6 +1,7 @@
 import 'package:LIFFT/models/menu_item_model.dart';
 import 'package:LIFFT/ui/views/account/account_view.dart';
 import 'package:LIFFT/ui/views/account/account_viewmodel.dart';
+import 'package:LIFFT/ui/views/exercises/exercises_view.dart';
 import 'package:LIFFT/ui/views/startup/startup_view.dart';
 import 'package:LIFFT/ui/views/workout/workout_view.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,11 @@ class HomeViewModel extends BaseViewModel {
       icon: Icon(Icons.fitness_center),
       name: "Workout",
       page: WorkoutView(),
+    ),
+    MenuItem(
+      icon: Icon(Icons.fitness_center),
+      name: "Exercises",
+      page: ExercisesView(),
     ),
   ];
 
