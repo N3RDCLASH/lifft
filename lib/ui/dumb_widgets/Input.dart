@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 class Input extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  final Icon prefixIcon;
+  final Icon suffixIcon;
+  final Function onChanged;
 
   Input(
       {Key key,
       @required this.label,
       @required this.controller,
-      this.prefixIcon})
+      this.suffixIcon,
+      this.onChanged})
       : super(key: key);
   @override
   Widget build(BuildContext context) => Container(
@@ -34,8 +36,9 @@ class Input extends StatelessWidget {
           ),
           child: TextField(
             controller: controller,
+            onChanged: (val) => onChanged(val),
             decoration: InputDecoration(
-              prefix: prefixIcon,
+              suffixIcon: suffixIcon,
               labelText: label,
               border: InputBorder.none,
             ),

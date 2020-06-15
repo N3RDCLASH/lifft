@@ -9,6 +9,9 @@ class ExercisesViewModel extends StreamViewModel {
   TextEditingController _searchTextEditingController = TextEditingController();
   TextEditingController get searchTextEditingController =>
       _searchTextEditingController;
+
+  List<Exercise> _exerciseList;
+  List<Exercise> get exerciseList => _exerciseList;
   @override
   Stream<List<Exercise>> get stream =>
       _firestoreService.listenToExerciseStream();
@@ -16,5 +19,20 @@ class ExercisesViewModel extends StreamViewModel {
   void dispose() {
     _searchTextEditingController.dispose();
     super.dispose();
+  }
+
+  @override
+  void onData(data) {
+    super.onData(data);
+    _exerciseList = data;
+  }
+
+  filterExercises(String val) {
+    _exerciseList = data
+        .where((Exercise exercise) => (exercise.name
+            .toLowerCase()
+            .contains(_searchTextEditingController.text.toLowerCase())))
+        .toList();
+    notifyListeners();
   }
 }

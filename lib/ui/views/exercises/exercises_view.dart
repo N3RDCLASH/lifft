@@ -14,7 +14,7 @@ class ExercisesView extends StatelessWidget {
                 FocusScope.of(context).unfocus();
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 color: background_color1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,9 +29,72 @@ class ExercisesView extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    Input(
-                      label: "Search",
-                      controller: model.searchTextEditingController,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Flexible(
+                          child: Input(
+                            label: "Search",
+                            controller: model.searchTextEditingController,
+                            onChanged: model.filterExercises,
+                            suffixIcon: Icon(Icons.search),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        IconButton(
+                          color: Colors.white,
+                          iconSize: 34,
+                          icon: Icon(Icons.filter_list),
+                          onPressed: () {
+                            showBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20),
+                                    color: background_color1,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          "Filter -  ${model.data.length}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 32,
+                                              color: Colors.white),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "Categories",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.white),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "Body part",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
+                        )
+                      ],
                     ),
                     SizedBox(
                       height: 20,
@@ -39,9 +102,9 @@ class ExercisesView extends StatelessWidget {
                     (model.dataReady)
                         ? Expanded(
                             child: ListView.builder(
-                              itemCount: model.data.length,
+                              itemCount: model.exerciseList.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return ExerciseTile(model.data[index]);
+                                return ExerciseTile(model.exerciseList[index]);
                               },
                             ),
                           )
