@@ -10,24 +10,31 @@ class Workout {
 
   Workout({this.notes, this.workout, this.id, this.name});
 
-  static Workout fromMap(DocumentSnapshot snapshot) {
-    if (snapshot.data == null) {
+  static Workout fromMap(DocumentSnapshot workoutSnapshot) {
+    if (workoutSnapshot.data == null) {
       return null;
     }
     List<WorkoutSet> sets = [];
-    for (var item in snapshot.data['workout']) {
+    for (var item in workoutSnapshot.data['workout']) {
       sets.add(
         WorkoutSet(
-          exercise: item['ex_id'],
+          exercise: Exercise(
+            id: item['ex_id'],
+          ),
           sets: item['sets'].toList(),
         ),
       );
     }
 
     return Workout(
-        id: snapshot.documentID,
-        name: snapshot.data['name'],
-        notes: snapshot.data['notes'],
+        id: workoutSnapshot.documentID,
+        name: workoutSnapshot.data['name'],
+        notes: workoutSnapshot.data['notes'],
         workout: sets);
+  }
+
+  @override
+  String toString() {
+    return "Workout: ${workout[0].exercise.toString()}";
   }
 }

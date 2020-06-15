@@ -1,5 +1,7 @@
+import 'package:LIFFT/models/exercise_model.dart';
+
 class WorkoutSet {
-  final String exercise;
+  Exercise exercise;
   final List sets;
 
   WorkoutSet({this.sets, this.exercise});

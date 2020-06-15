@@ -7,8 +7,8 @@ class User {
 
   User.fromData(Map<String, dynamic> data)
       : id = data['id'],
-        fullName = data['id'],
-        email = data['id'];
+        fullName = data['fullName'],
+        email = data['email'];
 
   Map<String, dynamic> toJson() {
     return {

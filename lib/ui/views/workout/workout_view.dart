@@ -57,7 +57,9 @@ class WorkoutView extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  if (model.data.length > 0)
+                  if (model.isBusy)
+                    CircularProgressIndicator()
+                  else if (model.data != null)
                     for (var workout in model.data) WorkoutCard(workout)
                 ],
               ),
@@ -98,7 +100,8 @@ class WorkoutCard extends ViewModelWidget<WorkoutViewModel> {
               ),
               if (!model.isBusy)
                 for (WorkoutSet workoutSet in _workout.workout)
-                  Text("${workoutSet.sets.length} x ${workoutSet.exercise}")
+                  Text(
+                      "${workoutSet.sets.length} x ${workoutSet.exercise.name}")
             ],
           )),
     );
