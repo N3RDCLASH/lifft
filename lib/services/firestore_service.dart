@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:LIFFT/models/bodypart_model.dart';
+import 'package:LIFFT/models/category_model.dart';
 import 'package:LIFFT/models/exercise_model.dart';
 import 'package:LIFFT/models/user.dart';
 import 'package:LIFFT/models/workout_model.dart';
@@ -13,14 +15,17 @@ class FirestoreService {
       Firestore.instance.collection('workouts');
   final CollectionReference _exerciseColletectionReference =
       Firestore.instance.collection('exercises');
+  final CollectionReference _categoriesColletectionReference =
+      Firestore.instance.collection('categories');
+  final CollectionReference _bodypartsColletectionReference =
+      Firestore.instance.collection('bodyparts');
 
   //Streams
   final StreamController<List<Workout>> _workoutsStreamController =
       StreamController<List<Workout>>.broadcast();
   final StreamController<List<Exercise>> _exerciseStreamController =
       StreamController<List<Exercise>>.broadcast();
-  final StreamController<Exercise> _singleExerciseStreamController =
-      StreamController<Exercise>.broadcast();
+
   Future createUser(User user) async {
     try {
       await _userCollectionReference.document(user.id).setData(user.toJson());
@@ -83,7 +88,6 @@ class FirestoreService {
         _exerciseStreamController.add(exercises);
       }
     });
-
     return _exerciseStreamController.stream;
   }
 
@@ -91,6 +95,30 @@ class FirestoreService {
     try {
       var snapshot = await _exerciseColletectionReference.document(id).get();
       return Exercise.fromMap(snapshot);
+    } catch (e) {
+      return e;
+    }
+  }
+
+  Future<List<Category>> getCategories() async {
+    try {
+      var snapshot = await _categoriesColletectionReference.getDocuments();
+      return snapshot.documents
+          .map((snapshot) => Category.fromMap(snapshot))
+          .toList();
+    } catch (e) {
+      return e;
+    }
+  }
+
+  Future<List<Bodypart>> getBodyparts() async {
+    try {
+      var snapshot = await _bodypartsColletectionReference.getDocuments();
+      print(snapshot.documents.length);
+      List<Bodypart> parts = snapshot.documents
+          .map((snapshot) => Bodypart.fromMap(snapshot))
+          .toList();
+      return parts;
     } catch (e) {
       return e;
     }

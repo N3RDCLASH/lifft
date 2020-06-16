@@ -1,6 +1,7 @@
 import 'package:LIFFT/models/exercise_model.dart';
 import 'package:LIFFT/style/theme.dart';
 import 'package:LIFFT/ui/dumb_widgets/Input.dart';
+import 'package:LIFFT/ui/smart_widgets/filter_sheet/filter_sheet_view.dart';
 import 'package:LIFFT/ui/views/exercises/exercises_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -51,46 +52,7 @@ class ExercisesView extends StatelessWidget {
                             showBottomSheet(
                                 context: context,
                                 builder: (context) {
-                                  return Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    color: background_color1,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          "Filter -  ${model.data.length}",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 32,
-                                              color: Colors.white),
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Text(
-                                          "Categories",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                              color: Colors.white),
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Text(
-                                          "Body part",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                              color: Colors.white),
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                                  return FilterSheetView();
                                 });
                           },
                         )
